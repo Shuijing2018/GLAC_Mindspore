@@ -1,0 +1,1188 @@
+# 1.This file shows the parsed IR info when graph evaluating failed to help find the problem.
+# 2.You can search the last `------------------------>` to the node which is inferred failed.
+# 3.Refer to https://www.mindspore.cn/search?inputValue=analyze_fail.dat to get more instructions.
+# ===============================================================================
+
+# [No.1] construct_wrapper.17
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(375)/    def construct(self, *inputs):/
+funcgraph fg_17(
+        %para1 : Tensor(F64)[1500, 561]    # inputs0
+        , %para2 : Tensor(F64)[1500, 4]    # inputs1
+        , %para3 : Tensor(I64)[1500]    # inputs2
+        , %para4 : Ref[Tensor(F32)][4, 561]    # linear_layer.weight
+        , %para5 : Ref[Tensor(F32)][4]    # linear_layer.bias
+        , %para6 : Ref[Tensor(F32)][1]    # beta1_power
+        , %para7 : Ref[Tensor(F32)][1]    # beta2_power
+        , %para8 : Ref[Tensor(F32)][4, 561]    # moment1.linear_layer.weight
+        , %para9 : Ref[Tensor(F32)][4]    # moment1.linear_layer.bias
+        , %para10 : Ref[Tensor(F32)][4, 561]    # moment2.linear_layer.weight
+        , %para11 : Ref[Tensor(F32)][4]    # moment2.linear_layer.bias
+        , %para12 : Ref[Tensor(F32)][4, 561]    # vhat.linear_layer.weight
+        , %para13 : Ref[Tensor(F32)][4]    # vhat.linear_layer.bias
+        , %para14 : Ref[Tensor(F32)][]    # learning_rate
+        , %para15 : Ref[Tensor(I32)][1]    # global_step
+    ) {
+    %1 : Tuple[Tensor(F64)*2,Tensor(I64)] = Primitive::MakeTuple{prim_type=1}(%para1, %para2, %para3)    #(Tensor(F64)[1500, 561], Tensor(F64)[1500, 4], Tensor(I64)[1500]) #scope: Default
+#[CNode]47
+
+#------------------------> 0
+    %2 = UnpackCall::unpack_call(FuncGraph::fg_48, %1)    #(Func, Tuple[Tensor(F64)*2,Tensor(I64)])    # fg_48=construct.48 #scope: Default
+#[CNode]49
+    Primitive::Return{prim_type=1}(%2)    #(Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(381)/        return loss/#[CNode]50
+}
+# order:
+#   1: construct_wrapper.17:[CNode]49{[0]: ValueNode<UnpackCall> unpack_call.51, [1]: ValueNode<FuncGraph> construct.48, [2]: [CNode]47}
+#   2: construct_wrapper.17:[CNode]50{[0]: ValueNode<Primitive> Return, [1]: [CNode]49}
+
+
+# [No.2] UnpackCall.18
+
+funcgraph fg_18(
+        %para16 : Func    # 19
+        , %para17 : Tuple[Tensor(F64)*2,Tensor(I64)]    # 20
+    ) {
+    %1 : Tensor(F64)[1500, 561] = Primitive::TupleGetItem{prim_type=1}(%para17, I64(0))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#52
+    %2 : Tensor(F64)[1500, 4] = Primitive::TupleGetItem{prim_type=1}(%para17, I64(1))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#53
+    %3 : Tensor(I64)[1500] = Primitive::TupleGetItem{prim_type=1}(%para17, I64(2))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#54
+
+#------------------------> 1
+    %4 = %para16(%1, %2, %3)    #(Tensor(F64)[1500, 561], Tensor(F64)[1500, 4], Tensor(I64)[1500]) #scope: Default
+#55
+    Primitive::Return{prim_type=1}(%4)    #(Undefined) #scope: Default
+#56
+}
+# order:
+#   1: UnpackCall.18:55{[0]: 19, [1]: 52, [2]: 53, [3]: 54}
+#   2: UnpackCall.18:56{[0]: ValueNode<Primitive> Return, [1]: 55}
+
+
+# [No.3] construct.21
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(375)/    def construct(self, *inputs):/
+funcgraph fg_21[fg_17](
+        %para18 : Tensor(F64)[1500, 561]    # inputs0
+        , %para19 : Tensor(F64)[1500, 4]    # inputs1
+        , %para20 : Tensor(I64)[1500]    # inputs2
+    ) {
+    %1 : Tuple[Tensor(F64)*2,Tensor(I64)] = Primitive::MakeTuple{prim_type=1}(%para18, %para19, %para20)    #(Tensor(F64)[1500, 561], Tensor(F64)[1500, 4], Tensor(I64)[1500]) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(375)/    def construct(self, *inputs):/#[CNode]57
+
+#------------------------> 2
+    %2 = UnpackCall::unpack_call(FuncGraph::fg_25, %1)    #(Func, Tuple[Tensor(F64)*2,Tensor(I64)])    # fg_25=construct.25 #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(376)/        loss = self.network(*inputs)/#loss
+    %3 = Primitive::getattr{prim_type=1}(%2, "dtype")    #(Undefined, Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(377)/        sens = F.fill(loss.dtype, loss.shape, self.sens)/#[CNode]58
+    %4 = Primitive::getattr{prim_type=1}(%2, "shape")    #(Undefined, Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(377)/        sens = F.fill(loss.dtype, loss.shape, self.sens)/#[CNode]59
+    %5 = FuncGraph::fg_60(%3, %4, F32(1))    #(Undefined, Undefined, Undefined)    # fg_60=fill.60 #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(377)/        sens = F.fill(loss.dtype, loss.shape, self.sens)/#sens
+    %6 = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%5)    #(Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(378)/        grads = self.grad(self.network, self.weights)(*inputs, sens)/#[CNode]61
+    %7 = UnpackGraphPrimitive::UnpackGraph{prim_type=1}(FuncGraph::fg_25, %1, %6)    #(Undefined, Tuple[Tensor(F64)*2,Tensor(I64)], Undefined)    # fg_25=construct.25 #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(378)/        grads = self.grad(self.network, self.weights)(*inputs, sens)/#grads
+    %8 = Primitive::MakeTuple{prim_type=1}(%para4, %para5)    #(Ref[Tensor(F32)][4, 561], Ref[Tensor(F32)][4]) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(378)/        grads = self.grad(self.network, self.weights)(*inputs, sens)/#[CNode]62
+    %9 = DoSignaturePrimitive::S-Prim-grad{prim_type=1}(%7, %8)    #(Undefined, Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(378)/        grads = self.grad(self.network, self.weights)(*inputs, sens)/#grads
+    %10 = UnpackCall::unpack_call(%9, %1, %6)    #(Undefined, Tuple[Tensor(F64)*2,Tensor(I64)], Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(378)/        grads = self.grad(self.network, self.weights)(*inputs, sens)/#grads
+    %11 = DoSignaturePrimitive::S-Prim-identity{prim_type=1}[side_effect_propagate=I64(1)](%10)    #(Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(379)/        grads = self.grad_reducer(grads)/#grads
+    %12 = FuncGraph::fg_63(%11)    #(Undefined)    # fg_63=construct.63 #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(380)/        loss = F.depend(loss, self.optimizer(grads))/#[CNode]64
+    %13 = DoSignaturePrimitive::S-Prim-Depend{prim_type=1}[side_effect_propagate=I64(1)](%2, %12)    #(Undefined, Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(380)/        loss = F.depend(loss, self.optimizer(grads))/#loss
+    Primitive::Return{prim_type=1}(%13)    #(Undefined) #scope: Default
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(381)/        return loss/#[CNode]65
+}
+# order:
+#   1: construct.21:loss{[0]: ValueNode<UnpackCall> unpack_call.66, [1]: ValueNode<FuncGraph> construct.25, [2]: [CNode]57}
+#   2: construct.21:[CNode]58{[0]: ValueNode<Primitive> getattr, [1]: loss, [2]: ValueNode<StringImm> dtype}
+#   3: construct.21:[CNode]59{[0]: ValueNode<Primitive> getattr, [1]: loss, [2]: ValueNode<StringImm> shape}
+#   4: construct.21:sens{[0]: ValueNode<FuncGraph> fill.60, [1]: [CNode]58, [2]: [CNode]59, [3]: ValueNode<FP32Imm> 1.000000}
+#   5: construct.21:[CNode]61{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: sens}
+#   6: construct.21:grads{[0]: ValueNode<UnpackGraphPrimitive> UnpackGraph, [1]: ValueNode<FuncGraph> construct.25, [2]: [CNode]57, [3]: [CNode]61}
+#   7: construct.21:grads{[0]: ValueNode<DoSignaturePrimitive> S-Prim-grad, [1]: grads, [2]: [CNode]62}
+#   8: construct.21:grads{[0]: ValueNode<UnpackCall> unpack_call.67, [1]: grads, [2]: [CNode]57, [3]: [CNode]61}
+#   9: construct.21:grads{[0]: ValueNode<DoSignaturePrimitive> S-Prim-identity, [1]: grads}
+#  10: construct.21:[CNode]64{[0]: ValueNode<FuncGraph> construct.63, [1]: grads}
+#  11: construct.21:loss{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Depend, [1]: loss, [2]: [CNode]64}
+#  12: construct.21:[CNode]65{[0]: ValueNode<Primitive> Return, [1]: loss}
+
+
+# [No.4] UnpackCall.22
+
+funcgraph fg_22(
+        %para21 : Func    # 23
+        , %para22 : Tuple[Tensor(F64)*2,Tensor(I64)]    # 24
+    ) {
+    %1 : Tensor(F64)[1500, 561] = Primitive::TupleGetItem{prim_type=1}(%para22, I64(0))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#68
+    %2 : Tensor(F64)[1500, 4] = Primitive::TupleGetItem{prim_type=1}(%para22, I64(1))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#69
+    %3 : Tensor(I64)[1500] = Primitive::TupleGetItem{prim_type=1}(%para22, I64(2))    #(Tuple[Tensor(F64)*2,Tensor(I64)], I64) #scope: Default
+#70
+
+#------------------------> 3
+    %4 = %para21(%1, %2, %3)    #(Tensor(F64)[1500, 561], Tensor(F64)[1500, 4], Tensor(I64)[1500]) #scope: Default
+#71
+    Primitive::Return{prim_type=1}(%4)    #(Undefined) #scope: Default
+#72
+}
+# order:
+#   1: UnpackCall.22:71{[0]: 23, [1]: 68, [2]: 69, [3]: 70}
+#   2: UnpackCall.22:72{[0]: ValueNode<Primitive> Return, [1]: 71}
+
+
+# [No.5] construct.25
+# In file D:\mindspore\GLAC\ms\algorithms.py(24)/    def construct(self, batchX, batchY, index):/
+funcgraph fg_25[fg_17](
+        %para23 : Tensor(F64)[1500, 561]    # batchX
+        , %para24 : Tensor(F64)[1500, 4]    # batchY
+        , %para25 : Tensor(I64)[1500]    # index
+    ) {
+    %1 : Tuple[Tensor(F64)] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%para24)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(25)/        label_sum_for_each_instance = mindspore.numpy.sum(batchY, axis=1)  # number of examples in the batch/#[CNode]73
+    %2 : Tuple[String] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}("axis")    #(String) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(25)/        label_sum_for_each_instance = mindspore.numpy.sum(batchY, axis=1)  # number of examples in the batch/#[CNode]74
+    %3 : Tuple[I64] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(I64(1))    #(I64) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(25)/        label_sum_for_each_instance = mindspore.numpy.sum(batchY, axis=1)  # number of examples in the batch/#[CNode]75
+    %4 : Dictionary[[axis,],[Int64]] = DoSignaturePrimitive::S-Prim-make_dict{prim_type=1}(%2, %3)    #(Tuple[String], Tuple[I64]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(25)/        label_sum_for_each_instance = mindspore.numpy.sum(batchY, axis=1)  # number of examples in the batch/#[CNode]76
+    %5 : Tensor(F64)[1500] = UnpackCall::unpack_call(FuncGraph::fg_77, %1, %4)    #(Func, Tuple[Tensor(F64)], Dictionary[[axis,],[Int64]])    # fg_77=sum_.77 #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(25)/        label_sum_for_each_instance = mindspore.numpy.sum(batchY, axis=1)  # number of examples in the batch/#label_sum_for_each_instance
+    %6 : Tuple[I64] = Primitive::getattr{prim_type=1}(%5, "shape")    #(Tensor(F64)[1500], String) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(26)/        print(label_sum_for_each_instance.shape)/#[CNode]78
+    %7 : Tensor(I32)[1] = DoSignaturePrimitive::S-Prim-Print{prim_type=1}[side_effect_io=Bool(1)](%6)    #(Tuple[I64]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(26)/        print(label_sum_for_each_instance.shape)/#[CNode]79
+    %8 : Tensor(I32)[1] = Primitive::stop_gradient{prim_type=1}(%7)    #(Tensor(I32)[1]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(376)/        loss = self.network(*inputs)/#[CNode]80
+    %9 : Tensor(Bool)[1500] = DoSignaturePrimitive::S-Prim-not_equal{prim_type=1}(%5, I64(0))    #(Tensor(F64)[1500], I64) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(28)/        labeled_index = label_sum_for_each_instance != 0/#labeled_index
+    %10 : Slice[None : None : None] = DoSignaturePrimitive::S-Prim-make_slice{prim_type=1}(None, None, None)    #(NoneType, NoneType, NoneType) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(33)/        labeled_batchY = batchY[labeled_index, :]/#[CNode]81
+    %11 : Tuple[Tensor(Bool),Slice[None : None : None]] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%9, %10)    #(Tensor(Bool)[1500], Slice[None : None : None]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(33)/        labeled_batchY = batchY[labeled_index, :]/#[CNode]82
+
+#------------------------> 4
+    %12 = DoSignaturePrimitive::S-Prim-getitem{prim_type=1}(%para24, %11)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#Φlabeled_batchY
+    %13 = Primitive::getattr{prim_type=1}(%12, "shape")    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(39)/        n, k = labeled_batchY.shape[0], labeled_batchY.shape[1]/#[CNode]83
+    %14 = DoSignaturePrimitive::S-Prim-getitem{prim_type=1}(%13, I64(0))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(39)/        n, k = labeled_batchY.shape[0], labeled_batchY.shape[1]/#[CNode]84
+    %15 = Primitive::getattr{prim_type=1}(%12, "shape")    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(39)/        n, k = labeled_batchY.shape[0], labeled_batchY.shape[1]/#[CNode]85
+    %16 = DoSignaturePrimitive::S-Prim-getitem{prim_type=1}(%15, I64(1))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(39)/        n, k = labeled_batchY.shape[0], labeled_batchY.shape[1]/#[CNode]86
+    %17 = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%14, %16)    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(39)/        n, k = labeled_batchY.shape[0], labeled_batchY.shape[1]/#[CNode]87
+    %18 = DoSignaturePrimitive::S-Prim-getitem{prim_type=1}(%17, I64(0))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(42)/            tempY = zeros((n, k), mindspore.float32)/#Φn
+    %19 = DoSignaturePrimitive::S-Prim-getitem{prim_type=1}(%17, I64(1))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(42)/            tempY = zeros((n, k), mindspore.float32)/#Φk
+    %20 = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%18, %19)    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(40)/        temp_loss = zeros((n, k), mindspore.float32)/#[CNode]88
+    %21 = DoSignaturePrimitive::S-Prim-Zeros{prim_type=1}(%20, F32)    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(40)/        temp_loss = zeros((n, k), mindspore.float32)/#temp_loss
+    %22 = FuncGraph::fg_89(I64(0), %21)    #(Undefined, Undefined)    # fg_89=⤾construct.89 #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(41)/        for i in range(k):/#[CNode]90
+    %23 = Primitive::Depend{prim_type=1}[side_effect_propagate=I64(1)](%22, %8)    #(Undefined, Tensor(I32)[1]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\nn\wrap\cell_wrapper.py(376)/        loss = self.network(*inputs)/#[CNode]91
+    Primitive::Return{prim_type=1}(%23)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(41)/        for i in range(k):/#[CNode]92
+}
+# order:
+#   1: construct.25:[CNode]73{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: batchY}
+#   2: construct.25:[CNode]74{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<StringImm> axis}
+#   3: construct.25:[CNode]75{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<Int64Imm> 1}
+#   4: construct.25:[CNode]76{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_dict, [1]: [CNode]74, [2]: [CNode]75}
+#   5: construct.25:label_sum_for_each_instance{[0]: ValueNode<UnpackCall> unpack_call.93, [1]: ValueNode<FuncGraph> sum_.77, [2]: [CNode]73, [3]: [CNode]76}
+#   6: construct.25:[CNode]78{[0]: ValueNode<Primitive> getattr, [1]: label_sum_for_each_instance, [2]: ValueNode<StringImm> shape}
+#   7: construct.25:[CNode]79{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Print, [1]: [CNode]78}
+#   8: construct.25:unlabeled_index{[0]: ValueNode<DoSignaturePrimitive> S-Prim-equal, [1]: label_sum_for_each_instance, [2]: ValueNode<Int64Imm> 0}
+#   9: construct.25:labeled_index{[0]: ValueNode<DoSignaturePrimitive> S-Prim-not_equal, [1]: label_sum_for_each_instance, [2]: ValueNode<Int64Imm> 0}
+#  10: construct.25:pred{[0]: ValueNode<FuncGraph> construct.94, [1]: batchX}
+#  11: construct.25:[CNode]95{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_slice, [1]: ValueNode<None> None, [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#  12: construct.25:[CNode]96{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: labeled_index, [2]: [CNode]95}
+#  13: construct.25:Φpred_labeled{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: pred, [2]: [CNode]96}
+#  14: construct.25:[CNode]81{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_slice, [1]: ValueNode<None> None, [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#  15: construct.25:[CNode]82{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: labeled_index, [2]: [CNode]81}
+#  16: construct.25:Φlabeled_batchY{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: batchY, [2]: [CNode]82}
+#  17: construct.25:[CNode]97{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_slice, [1]: ValueNode<None> None, [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#  18: construct.25:[CNode]98{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: unlabeled_index, [2]: [CNode]97}
+#  19: construct.25:Φpred_unlabeled{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: pred, [2]: [CNode]98}
+#  20: construct.25:[CNode]99{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_slice, [1]: ValueNode<None> None, [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#  21: construct.25:[CNode]100{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: unlabeled_index, [2]: [CNode]99}
+#  22: construct.25:unlabeled_batchY{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: batchY, [2]: [CNode]100}
+#  23: construct.25:unlabeledY{[0]: ValueNode<FuncGraph> zeros_like.101, [1]: unlabeled_batchY}
+#  24: construct.25:[CNode]102{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_slice, [1]: ValueNode<None> None, [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#  25: construct.25:[CNode]103{[0]: ValueNode<DoSignaturePrimitive> S-Prim-negative, [1]: ValueNode<Int64Imm> 1}
+#  26: construct.25:[CNode]104{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: [CNode]102, [2]: [CNode]103}
+#  27: construct.25:ΦunlabeledY{[0]: ValueNode<DoSignaturePrimitive> S-Prim-setitem, [1]: unlabeledY, [2]: [CNode]104, [3]: ValueNode<Int64Imm> 1}
+#  28: construct.25:[CNode]83{[0]: ValueNode<Primitive> getattr, [1]: Φlabeled_batchY, [2]: ValueNode<StringImm> shape}
+#  29: construct.25:[CNode]84{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]83, [2]: ValueNode<Int64Imm> 0}
+#  30: construct.25:[CNode]85{[0]: ValueNode<Primitive> getattr, [1]: Φlabeled_batchY, [2]: ValueNode<StringImm> shape}
+#  31: construct.25:[CNode]86{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]85, [2]: ValueNode<Int64Imm> 1}
+#  32: construct.25:[CNode]87{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: [CNode]84, [2]: [CNode]86}
+#  33: construct.25:Φn{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]87, [2]: ValueNode<Int64Imm> 0}
+#  34: construct.25:Φk{[0]: ValueNode<DoSignaturePrimitive> S-Prim-getitem, [1]: [CNode]87, [2]: ValueNode<Int64Imm> 1}
+#  35: construct.25:[CNode]88{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: Φn, [2]: Φk}
+#  36: construct.25:temp_loss{[0]: ValueNode<DoSignaturePrimitive> S-Prim-Zeros, [1]: [CNode]88, [2]: ValueNode<Float> Float32}
+#  37: construct.25:[CNode]105{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_range, [1]: Φk}
+#  38: construct.25:[CNode]106{[0]: ValueNode<FuncGraph> ms_len.107, [1]: [CNode]105}
+#  39: construct.25:[CNode]90{[0]: ValueNode<FuncGraph> ⤾construct.89, [1]: ValueNode<Int64Imm> 0, [2]: temp_loss}
+#  40: construct.25:[CNode]92{[0]: ValueNode<Primitive> Return, [1]: [CNode]91}
+
+
+# [No.6] _tensor_getitem_by_tuple.26
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\getitem_impl.py(282)/def _tensor_getitem_by_tuple(data, tuple_index):/
+funcgraph fg_26(
+        %para26 : Tensor(F64)[1500, 4]    # data
+        , %para27 : Tuple[Tensor(Bool),Slice[None : None : None]]    # tuple_index
+    ) {
+    %1 : ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, compile_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#Φlabeled_batchY
+    %2 : Func = Primitive::getattr{prim_type=1}(%1, "tensor_index_by_tuple")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#Φlabeled_batchY
+
+#------------------------> 5
+    %3 = %2(%para26, %para27)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#Φlabeled_batchY
+    Primitive::Return{prim_type=1}(%3)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#Φlabeled_batchY
+}
+# order:
+#   1: _tensor_getitem_by_tuple.108:[CNode]109{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: _tensor_getitem_by_tuple.108:[CNode]110{[0]: [CNode]109, [1]: data, [2]: tuple_index}
+#   3: _tensor_getitem_by_tuple.26:Φlabeled_batchY{[0]: Φlabeled_batchY, [1]: data, [2]: tuple_index}
+#   4: _tensor_getitem_by_tuple.26:Φlabeled_batchY{[0]: ValueNode<Primitive> Return, [1]: Φlabeled_batchY}
+
+
+# [No.7] tensor_index_by_tuple.27
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(430)/def tensor_index_by_tuple(data, tuple_index):/
+funcgraph fg_27(
+        %para28 : Tensor(F64)[1500, 4]    # data
+        , %para29 : Tuple[Tensor(Bool),Slice[None : None : None]]    # tuple_index
+    ) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]111
+    %2 : Func = Primitive::resolve{prim_type=1}(NameSpace::Ast, not_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(0)/#[CNode]112
+    %3 : Bool = %2(%para29)    #(Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]113
+    %4 : Bool = %1(%3)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]114
+    %5 : Func = Primitive::Switch{prim_type=1}(%4, FuncGraph::fg_115, FuncGraph::fg_28)    #(Bool, Func, Func)    # fg_115=✓tensor_index_by_tuple.115, fg_28=✗tensor_index_by_tuple.28 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]116
+
+#------------------------> 6
+    %6 = %5() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]117
+    Primitive::Return{prim_type=1}(%6)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]118
+}
+# order:
+#   1: tensor_index_by_tuple.27:[CNode]113{[0]: [CNode]112, [1]: tuple_index}
+#   2: tensor_index_by_tuple.27:[CNode]114{[0]: [CNode]111, [1]: [CNode]113}
+#   3: tensor_index_by_tuple.27:[CNode]116{[0]: ValueNode<Primitive> Switch, [1]: [CNode]114, [2]: ValueNode<FuncGraph> ✓tensor_index_by_tuple.115, [3]: ValueNode<FuncGraph> ✗tensor_index_by_tuple.28}
+#   4: tensor_index_by_tuple.27:[CNode]117{[0]: [CNode]116}
+#   5: tensor_index_by_tuple.27:[CNode]118{[0]: ValueNode<Primitive> Return, [1]: [CNode]117}
+#   6: tensor_index_by_tuple.27:[CNode]119{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> _tensor_getitem_by_tuple_slice}
+
+
+# [No.8] ✗tensor_index_by_tuple.28
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/
+funcgraph fg_28[fg_27](
+) {
+
+#------------------------> 7
+    %1 = FuncGraph::fg_29()    # fg_29=↓tensor_index_by_tuple.29 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]120
+    Primitive::Return{prim_type=1}(%1)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/#[CNode]121
+}
+# order:
+#   1: ✗tensor_index_by_tuple.28:[CNode]120{[0]: ValueNode<FuncGraph> ↓tensor_index_by_tuple.29}
+#   2: ✗tensor_index_by_tuple.28:[CNode]121{[0]: ValueNode<Primitive> Return, [1]: [CNode]120}
+
+
+# [No.9] ↓tensor_index_by_tuple.29
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(432)/    if not tuple_index:/
+funcgraph fg_29[fg_27](
+) {
+    %1 : $(tensor_index_by_tuple.27):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(435)/    op_name = const_utils.TENSOR_GETITEM/#[CNode]122
+    %2 : Func = Primitive::getattr{prim_type=1}(%1, "judge_data_dim")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(440)/    const_utils.judge_data_dim(data.ndim, min_data_dim, max_data_dim)/#[CNode]123
+    %3 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]124
+    %4 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, _expand_data_dims)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]125
+    %5 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, _transform_ellipsis_to_slice)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(436)/    tuple_index = _transform_ellipsis_to_slice(data, tuple_index, op_name)/#[CNode]126
+    %6 : String = Primitive::getattr{prim_type=1}(%1, "TENSOR_GETITEM")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(435)/    op_name = const_utils.TENSOR_GETITEM/#op_name
+    %7 : Tuple[Tensor(Bool),Slice[None : None : None]] = %5(%para28, %para29, %6)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(436)/    tuple_index = _transform_ellipsis_to_slice(data, tuple_index, op_name)/#tuple_index
+    %8 : Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]] = %4(%para28, %7)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]127
+    %9 : Tensor(F64)[1500, 4] = %3(%8, I64(0))    #(Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#data
+    %10 : I64 = Primitive::getattr{prim_type=1}(%9, "ndim")    #(Tensor(F64)[1500, 4], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(440)/    const_utils.judge_data_dim(data.ndim, min_data_dim, max_data_dim)/#[CNode]128
+    %11 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(439)/    min_data_dim, max_data_dim = 1, 8/#[CNode]129
+    %12 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, MakeTuple)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(439)/    min_data_dim, max_data_dim = 1, 8/#[CNode]130
+    %13 : Tuple[I64*2] = %12(I64(1), I64(8))    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(439)/    min_data_dim, max_data_dim = 1, 8/#[CNode]131
+    %14 : I64 = %11(%13, I64(0))    #(Tuple[I64*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(439)/    min_data_dim, max_data_dim = 1, 8/#min_data_dim
+    %15 : I64 = %11(%13, I64(1))    #(Tuple[I64*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(439)/    min_data_dim, max_data_dim = 1, 8/#max_data_dim
+    %16 : NoneType = %2(%10, %14, %15)    #(I64, I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(440)/    const_utils.judge_data_dim(data.ndim, min_data_dim, max_data_dim)/#[CNode]132
+    %17 : NoneType = Primitive::stop_gradient{prim_type=1}(%16)    #(NoneType) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#[CNode]133
+    %18 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]134
+    %19 : Func = Primitive::resolve{prim_type=1}(NameSpace::Ast, eq)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(0)/#[CNode]135
+    %20 : Func = Primitive::getattr{prim_type=1}(%1, "tuple_index_type_cnt")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(443)/    contain_type = const_utils.tuple_index_type_cnt(indexes_types, op_name)/#[CNode]136
+    %21 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, hyper_map)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(442)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]137
+    %22 : $(tensor_index_by_tuple.27):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(442)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]138
+    %23 : Func = Primitive::getattr{prim_type=1}(%22, "typeof")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(442)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]139
+    %24 : Tuple[Tensor(Bool),Slice[None : None : None]] = %3(%8, I64(1))    #(Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#tuple_index
+    %25 : Tuple[TypeType*2] = %21(%23, %24)    #(Func, Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(442)/    indexes_types = hyper_map(F.typeof, tuple_index)/#indexes_types
+    %26 : I64 = %20(%25, %6)    #(Tuple[TypeType*2], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(443)/    contain_type = const_utils.tuple_index_type_cnt(indexes_types, op_name)/#contain_type
+    %27 : I64 = Primitive::getattr{prim_type=1}(%1, "ALL_BASIC")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]140
+    %28 : Bool = %19(%26, %27)    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]141
+    %29 : Bool = %18(%28)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]142
+    %30 : Func = Primitive::Switch{prim_type=1}(%29, FuncGraph::fg_143, FuncGraph::fg_30)    #(Bool, Func, Func)    # fg_143=✓↓tensor_index_by_tuple.143, fg_30=✗↓tensor_index_by_tuple.30 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]144
+
+#------------------------> 8
+    %31 = %30() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]145
+    %32 = Primitive::Depend{prim_type=1}[side_effect_propagate=I64(1)](%31, %17)    #(Undefined, NoneType) #scope: Default/network-CustomWithLossCell
+      # In file D:\mindspore\GLAC\ms\algorithms.py(46)/        loss_1_pos = mindspore.numpy.mean(self._theta * mindspore.numpy.sum(temp_loss * labeled_batchY, axis=1))/#[CNode]146
+    Primitive::Return{prim_type=1}(%32)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]147
+}
+# order:
+#   1: ↓tensor_index_by_tuple.29:[CNode]148{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: ↓tensor_index_by_tuple.29:[CNode]149{[0]: [CNode]148, [1]: data, [2]: tuple_index, [3]: op_name}
+#   3: ↓tensor_index_by_tuple.29:tuple_index{[0]: [CNode]126, [1]: data, [2]: tuple_index, [3]: op_name}
+#   4: ↓tensor_index_by_tuple.29:[CNode]150{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: ↓tensor_index_by_tuple.29:[CNode]151{[0]: [CNode]150, [1]: data, [2]: tuple_index}
+#   6: ↓tensor_index_by_tuple.29:[CNode]127{[0]: [CNode]125, [1]: data, [2]: tuple_index}
+#   7: ↓tensor_index_by_tuple.29:data{[0]: [CNode]124, [1]: [CNode]127, [2]: ValueNode<Int64Imm> 0}
+#   8: ↓tensor_index_by_tuple.29:tuple_index{[0]: [CNode]124, [1]: [CNode]127, [2]: ValueNode<Int64Imm> 1}
+#   9: ↓tensor_index_by_tuple.29:[CNode]131{[0]: [CNode]130, [1]: ValueNode<Int64Imm> 1, [2]: ValueNode<Int64Imm> 8}
+#  10: ↓tensor_index_by_tuple.29:min_data_dim{[0]: [CNode]129, [1]: [CNode]131, [2]: ValueNode<Int64Imm> 0}
+#  11: ↓tensor_index_by_tuple.29:max_data_dim{[0]: [CNode]129, [1]: [CNode]131, [2]: ValueNode<Int64Imm> 1}
+#  12: ↓tensor_index_by_tuple.29:[CNode]128{[0]: ValueNode<Primitive> getattr, [1]: data, [2]: ValueNode<StringImm> ndim}
+#  13: ↓tensor_index_by_tuple.29:[CNode]152{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  14: ↓tensor_index_by_tuple.29:[CNode]153{[0]: [CNode]152, [1]: [CNode]128, [2]: min_data_dim, [3]: max_data_dim}
+#  15: ↓tensor_index_by_tuple.29:[CNode]132{[0]: [CNode]123, [1]: [CNode]128, [2]: min_data_dim, [3]: max_data_dim}
+#  16: ↓tensor_index_by_tuple.29:[CNode]154{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  17: ↓tensor_index_by_tuple.29:[CNode]155{[0]: [CNode]154, [1]: [CNode]139, [2]: tuple_index}
+#  18: ↓tensor_index_by_tuple.29:indexes_types{[0]: [CNode]137, [1]: [CNode]139, [2]: tuple_index}
+#  19: ↓tensor_index_by_tuple.29:[CNode]156{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  20: ↓tensor_index_by_tuple.29:[CNode]157{[0]: [CNode]156, [1]: indexes_types, [2]: op_name}
+#  21: ↓tensor_index_by_tuple.29:contain_type{[0]: [CNode]136, [1]: indexes_types, [2]: op_name}
+#  22: ↓tensor_index_by_tuple.29:[CNode]141{[0]: [CNode]135, [1]: contain_type, [2]: [CNode]140}
+#  23: ↓tensor_index_by_tuple.29:[CNode]142{[0]: [CNode]134, [1]: [CNode]141}
+#  24: ↓tensor_index_by_tuple.29:[CNode]144{[0]: ValueNode<Primitive> Switch, [1]: [CNode]142, [2]: ValueNode<FuncGraph> ✓↓tensor_index_by_tuple.143, [3]: ValueNode<FuncGraph> ✗↓tensor_index_by_tuple.30}
+#  25: ↓tensor_index_by_tuple.29:[CNode]145{[0]: [CNode]144}
+#  26: ↓tensor_index_by_tuple.29:[CNode]147{[0]: ValueNode<Primitive> Return, [1]: [CNode]145}
+#  27: ↓tensor_index_by_tuple.29:[CNode]147{[0]: ValueNode<Primitive> Return, [1]: [CNode]146}
+
+
+# [No.10] ✗↓tensor_index_by_tuple.30
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/
+funcgraph fg_30[fg_29](
+) {
+
+#------------------------> 9
+    %1 = FuncGraph::fg_31()    # fg_31=↓↓tensor_index_by_tuple.31 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]158
+    Primitive::Return{prim_type=1}(%1)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/#[CNode]159
+}
+# order:
+#   1: ✗↓tensor_index_by_tuple.30:[CNode]158{[0]: ValueNode<FuncGraph> ↓↓tensor_index_by_tuple.31}
+#   2: ✗↓tensor_index_by_tuple.30:[CNode]159{[0]: ValueNode<Primitive> Return, [1]: [CNode]158}
+
+
+# [No.11] ↓↓tensor_index_by_tuple.31
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(444)/    if contain_type == const_utils.ALL_BASIC:/
+funcgraph fg_31[fg_29](
+) {
+    %1 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, _tensor_getitem_by_tuple)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]160
+    %2 : $(↓tensor_index_by_tuple.29):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]124
+    %3 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, _expand_data_dims)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]125
+    %4 : $(tensor_index_by_tuple.27):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, _transform_ellipsis_to_slice)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(436)/    tuple_index = _transform_ellipsis_to_slice(data, tuple_index, op_name)/#[CNode]126
+    %5 : $(tensor_index_by_tuple.27):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(435)/    op_name = const_utils.TENSOR_GETITEM/#[CNode]122
+    %6 : $(↓tensor_index_by_tuple.29):String = Primitive::getattr{prim_type=1}(%5, "TENSOR_GETITEM")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(435)/    op_name = const_utils.TENSOR_GETITEM/#op_name
+    %7 : $(↓tensor_index_by_tuple.29):Tuple[Tensor(Bool),Slice[None : None : None]] = %4(%para28, %para29, %6)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(436)/    tuple_index = _transform_ellipsis_to_slice(data, tuple_index, op_name)/#tuple_index
+    %8 : $(↓tensor_index_by_tuple.29):Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]] = %3(%para28, %7)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#[CNode]127
+    %9 : $(↓tensor_index_by_tuple.29):Tensor(F64)[1500, 4] = %2(%8, I64(0))    #(Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#data
+    %10 : $(↓tensor_index_by_tuple.29):Tuple[Tensor(Bool),Slice[None : None : None]] = %2(%8, I64(1))    #(Tuple[Tensor(F64),Tuple[Tensor(Bool),Slice[None : None : None]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(437)/    data, tuple_index = _expand_data_dims(data, tuple_index)/#tuple_index
+
+#------------------------> 10
+    %11 = %1(%9, %10, %6)    #(Tensor(F64)[1500, 4], Tuple[Tensor(Bool),Slice[None : None : None]], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]161
+    Primitive::Return{prim_type=1}(%11)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]162
+}
+# order:
+#   1: ↓↓tensor_index_by_tuple.31:[CNode]163{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: ↓↓tensor_index_by_tuple.31:[CNode]164{[0]: [CNode]163, [1]: data, [2]: tuple_index, [3]: op_name}
+#   3: ↓↓tensor_index_by_tuple.31:[CNode]161{[0]: [CNode]160, [1]: data, [2]: tuple_index, [3]: op_name}
+#   4: ↓↓tensor_index_by_tuple.31:[CNode]162{[0]: ValueNode<Primitive> Return, [1]: [CNode]161}
+
+
+# [No.12] _tensor_getitem_by_tuple.32
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(589)/def _tensor_getitem_by_tuple(data, tuple_index, op_name):/
+funcgraph fg_32(
+        %para30 : Tensor(F64)[1500, 4]    # Φdata
+        , %para31 : Tuple[Tensor(Bool),Slice[None : None : None]]    # Φtuple_index
+        , %para32 : String    # Φop_name
+    ) {
+
+#------------------------> 11
+    %1 = FuncGraph::fg_33(I64(0), Bool(0))    #(I64, Bool)    # fg_33=⤾_tensor_getitem_by_tuple.33 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]165
+    Primitive::Return{prim_type=1}(%1)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]166
+}
+# order:
+#   1: _tensor_getitem_by_tuple.32:[CNode]167{[0]: [CNode]168, [1]: Φtuple_index}
+#   2: _tensor_getitem_by_tuple.32:[CNode]165{[0]: ValueNode<FuncGraph> ⤾_tensor_getitem_by_tuple.33, [1]: ValueNode<Int64Imm> 0, [2]: ValueNode<BoolImm> false}
+#   3: _tensor_getitem_by_tuple.32:[CNode]166{[0]: ValueNode<Primitive> Return, [1]: [CNode]165}
+#   4: _tensor_getitem_by_tuple.32:Φlen{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> len}
+#   5: _tensor_getitem_by_tuple.32:Φis_shape_unknown{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> is_shape_unknown}
+#   6: _tensor_getitem_by_tuple.32:Φcheck_range{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> check_range}
+#   7: _tensor_getitem_by_tuple.32:Φ_transform_indexing_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> _transform_indexing_tensor}
+#   8: _tensor_getitem_by_tuple.32:Φconvert_slice_to_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> convert_slice_to_tensor}
+#   9: _tensor_getitem_by_tuple.32:Φstack{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> stack}
+
+
+# [No.13] ⤾_tensor_getitem_by_tuple.33
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/
+funcgraph fg_33[fg_32](
+        %para33 : I64    # @[CNode]34
+        , %para34 : Bool    # Φslice_is_tensor
+    ) {
+    %1 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, len)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]168
+    %2 : $(_tensor_getitem_by_tuple.32):I64 = %1(%para31)    #(Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]167
+    %3 : Bool = MultitypeFuncGraph::less{(Tensor, Number), (Number, Tensor), (Number, Number), (Tensor, Tensor)}(%para33, %2)    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]169
+    %4 : Func = Primitive::Switch{prim_type=1}(%3, FuncGraph::fg_35, FuncGraph::fg_37)    #(Bool, Func, Func)    # fg_35=⥁_tensor_getitem_by_tuple.35, fg_37=↓_tensor_getitem_by_tuple.37 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]170
+
+#------------------------> 18
+    %5 = %4() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]171
+    Primitive::Return{prim_type=1}(%5)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]172
+}
+# order:
+#   1: ⤾_tensor_getitem_by_tuple.33:[CNode]169{[0]: ValueNode<MultitypeFuncGraph> less.15, [1]: @[CNode]34, [2]: [CNode]167}
+#   2: ⤾_tensor_getitem_by_tuple.33:[CNode]170{[0]: ValueNode<Primitive> Switch, [1]: [CNode]169, [2]: ValueNode<FuncGraph> ⥁_tensor_getitem_by_tuple.35, [3]: ValueNode<FuncGraph> ↓_tensor_getitem_by_tuple.37}
+#   3: ⤾_tensor_getitem_by_tuple.33:[CNode]171{[0]: [CNode]170}
+#   4: ⤾_tensor_getitem_by_tuple.33:[CNode]172{[0]: ValueNode<Primitive> Return, [1]: [CNode]171}
+#   5: ⤾_tensor_getitem_by_tuple.33:Φisinstance{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> isinstance}
+#   6: ⤾_tensor_getitem_by_tuple.33:Φslice{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> slice}
+#   7: ⤾_tensor_getitem_by_tuple.33:Φslice_get_item{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> slice_get_item}
+#   8: ⤾_tensor_getitem_by_tuple.33:Φconst_utils{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> const_utils}
+#   9: ⤾_tensor_getitem_by_tuple.33:Φlen{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> len}
+#  10: ⤾_tensor_getitem_by_tuple.33:Φhyper_map{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> hyper_map}
+#  11: ⤾_tensor_getitem_by_tuple.33:ΦF{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> F}
+#  12: ⤾_tensor_getitem_by_tuple.33:Φenumerate{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> enumerate}
+#  13: ⤾_tensor_getitem_by_tuple.33:Φzip{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> zip}
+#  14: ⤾_tensor_getitem_by_tuple.33:Φmstype{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> mstype}
+#  15: ⤾_tensor_getitem_by_tuple.33:Φis_shape_unknown{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> is_shape_unknown}
+#  16: ⤾_tensor_getitem_by_tuple.33:Φcheck_range{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> check_range}
+#  17: ⤾_tensor_getitem_by_tuple.33:Φ_transform_indexing_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> _transform_indexing_tensor}
+#  18: ⤾_tensor_getitem_by_tuple.33:Φconvert_slice_to_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> convert_slice_to_tensor}
+#  19: ⤾_tensor_getitem_by_tuple.33:Φstack{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> stack}
+
+
+# [No.14] ⥁_tensor_getitem_by_tuple.35
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/
+funcgraph fg_35[fg_33](
+) {
+    %1 : I64 = MultitypeFuncGraph::add{(Tuple, Tuple), (RowTensor, Tensor), (Tensor, Tensor), (List, List), (Tensor, List), (List, Tensor), (String, String), (Tuple, Tensor), (NoneType, NoneType), (Number, Number), (Number, Tensor), (Tensor, Number), (Tensor, Tuple)}(%para33, I64(1))    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]34
+    %2 : I64 = Primitive::stop_gradient{prim_type=1}(%1)    #(I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]173
+    %3 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]174
+    %4 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, isinstance)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#Φisinstance
+    %5 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]175
+    %6 : Tensor(Bool)[1500] = %5(%para31, %para33)    #(Tuple[Tensor(Bool),Slice[None : None : None]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#item
+    %7 : $(_tensor_getitem_by_tuple.32):TypeType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, slice)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#Φslice
+    %8 : Bool = %4(%6, %7)    #(Tensor(Bool)[1500], TypeType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]176
+    %9 : Bool = %3(%8)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]177
+    %10 : Func = Primitive::Switch{prim_type=1}(%9, FuncGraph::fg_178, FuncGraph::fg_179)    #(Bool, Func, Func)    # fg_178=✓⥁_tensor_getitem_by_tuple.178, fg_179=✗⥁_tensor_getitem_by_tuple.179 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]180
+    %11 : Bool = %10() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]181
+
+#------------------------> 16
+    %12 = FuncGraph::fg_36(%11)    #(Bool)    # fg_36=↓⥁_tensor_getitem_by_tuple.36 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]182
+    %13 = Primitive::Depend{prim_type=1}[side_effect_propagate=I64(1)](%12, %2)    #(Undefined, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]183
+    Primitive::Return{prim_type=1}(%13)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/#[CNode]184
+}
+# order:
+#   1: ⥁_tensor_getitem_by_tuple.35:item{[0]: [CNode]175, [1]: Φtuple_index, [2]: @[CNode]34}
+#   2: ⥁_tensor_getitem_by_tuple.35:[CNode]34{[0]: ValueNode<MultitypeFuncGraph> add.4, [1]: @[CNode]34, [2]: ValueNode<Int64Imm> 1}
+#   3: ⥁_tensor_getitem_by_tuple.35:[CNode]185{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: ⥁_tensor_getitem_by_tuple.35:[CNode]186{[0]: [CNode]185, [1]: item, [2]: Φslice}
+#   5: ⥁_tensor_getitem_by_tuple.35:[CNode]176{[0]: Φisinstance, [1]: item, [2]: Φslice}
+#   6: ⥁_tensor_getitem_by_tuple.35:[CNode]177{[0]: [CNode]174, [1]: [CNode]176}
+#   7: ⥁_tensor_getitem_by_tuple.35:[CNode]180{[0]: ValueNode<Primitive> Switch, [1]: [CNode]177, [2]: ValueNode<FuncGraph> ✓⥁_tensor_getitem_by_tuple.178, [3]: ValueNode<FuncGraph> ✗⥁_tensor_getitem_by_tuple.179}
+#   8: ⥁_tensor_getitem_by_tuple.35:[CNode]181{[0]: [CNode]180}
+#   9: ⥁_tensor_getitem_by_tuple.35:[CNode]184{[0]: ValueNode<Primitive> Return, [1]: [CNode]181}
+#  10: ⥁_tensor_getitem_by_tuple.35:[CNode]182{[0]: ValueNode<FuncGraph> ↓⥁_tensor_getitem_by_tuple.36, [1]: [CNode]181}
+#  11: ⥁_tensor_getitem_by_tuple.35:[CNode]183{[0]: ValueNode<Primitive> Depend, [1]: [CNode]182, [2]: [CNode]173}
+#  12: ⥁_tensor_getitem_by_tuple.35:[CNode]184{[0]: ValueNode<Primitive> Return, [1]: [CNode]183}
+
+
+# [No.15] ↓⥁_tensor_getitem_by_tuple.36
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(594)/        if isinstance(item, slice):/
+funcgraph fg_36[fg_35](
+        %para35 : Bool    # Φslice_is_tensor
+    ) {
+    %1 : $(⥁_tensor_getitem_by_tuple.35):I64 = MultitypeFuncGraph::add{(Tuple, Tuple), (RowTensor, Tensor), (Tensor, Tensor), (List, List), (Tensor, List), (List, Tensor), (String, String), (Tuple, Tensor), (NoneType, NoneType), (Number, Number), (Number, Tensor), (Tensor, Number), (Tensor, Tuple)}(%para33, I64(1))    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]34
+
+#------------------------> 17
+    %2 = FuncGraph::fg_33(%1, %para35)    #(I64, Bool)    # fg_33=⤾_tensor_getitem_by_tuple.33 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]187
+    Primitive::Return{prim_type=1}(%2)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/#[CNode]188
+}
+# order:
+#   1: ↓⥁_tensor_getitem_by_tuple.36:[CNode]187{[0]: ValueNode<FuncGraph> ⤾_tensor_getitem_by_tuple.33, [1]: [CNode]34, [2]: Φslice_is_tensor}
+#   2: ↓⥁_tensor_getitem_by_tuple.36:[CNode]188{[0]: ValueNode<Primitive> Return, [1]: [CNode]187}
+
+
+# [No.16] ↓_tensor_getitem_by_tuple.37
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(593)/    for item in tuple_index:/
+funcgraph fg_37[fg_33](
+) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]189
+    %2 : Bool = %1(%para34)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]190
+    %3 : Func = Primitive::Switch{prim_type=1}(%2, FuncGraph::fg_191, FuncGraph::fg_38)    #(Bool, Func, Func)    # fg_191=✓↓_tensor_getitem_by_tuple.191, fg_38=✗↓_tensor_getitem_by_tuple.38 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]192
+
+#------------------------> 19
+    %4 = %3() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]193
+    Primitive::Return{prim_type=1}(%4)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]194
+}
+# order:
+#   1: ↓_tensor_getitem_by_tuple.37:[CNode]190{[0]: [CNode]189, [1]: Φslice_is_tensor}
+#   2: ↓_tensor_getitem_by_tuple.37:[CNode]192{[0]: ValueNode<Primitive> Switch, [1]: [CNode]190, [2]: ValueNode<FuncGraph> ✓↓_tensor_getitem_by_tuple.191, [3]: ValueNode<FuncGraph> ✗↓_tensor_getitem_by_tuple.38}
+#   3: ↓_tensor_getitem_by_tuple.37:[CNode]193{[0]: [CNode]192}
+#   4: ↓_tensor_getitem_by_tuple.37:[CNode]194{[0]: ValueNode<Primitive> Return, [1]: [CNode]193}
+
+
+# [No.17] ✗↓_tensor_getitem_by_tuple.38
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/
+funcgraph fg_38[fg_32](
+) {
+
+#------------------------> 20
+    %1 = FuncGraph::fg_39()    # fg_39=↓↓_tensor_getitem_by_tuple.39 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]195
+    Primitive::Return{prim_type=1}(%1)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/#[CNode]196
+}
+# order:
+#   1: ✗↓_tensor_getitem_by_tuple.38:[CNode]195{[0]: ValueNode<FuncGraph> ↓↓_tensor_getitem_by_tuple.39}
+#   2: ✗↓_tensor_getitem_by_tuple.38:[CNode]196{[0]: ValueNode<Primitive> Return, [1]: [CNode]195}
+
+
+# [No.18] ↓↓_tensor_getitem_by_tuple.39
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(598)/    if slice_is_tensor:/
+funcgraph fg_39[fg_32](
+) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(605)/    tuple_index_new, slice_shapes = (), ()/#[CNode]197
+    %2 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, MakeTuple)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(605)/    tuple_index_new, slice_shapes = (), ()/#[CNode]198
+    %3 : Tuple[Tuple[]*2] = %2((), ())    #(Tuple[], Tuple[]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(605)/    tuple_index_new, slice_shapes = (), ()/#[CNode]199
+    %4 : Tuple[] = %1(%3, I64(0))    #(Tuple[Tuple[]*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(605)/    tuple_index_new, slice_shapes = (), ()/#tuple_index_new
+    %5 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(601)/    tensor_indexes, slice_indexes = [], []/#[CNode]200
+    %6 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, MakeTuple)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(601)/    tensor_indexes, slice_indexes = [], []/#[CNode]201
+    %7 : Tuple[List[]*2] = %6([], [])    #(List[], List[]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(601)/    tensor_indexes, slice_indexes = [], []/#[CNode]202
+    %8 : List[] = %5(%7, I64(0))    #(Tuple[List[]*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(601)/    tensor_indexes, slice_indexes = [], []/#tensor_indexes
+    %9 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(603)/    slice_positions, _, _, int_positions, _, tensor_positions, sequence_positions = \/#[CNode]203
+    %10 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(648)/        return const_utils.make_tensor([], data.dtype, final_shape)/#Φconst_utils
+    %11 : Func = Primitive::getattr{prim_type=1}(%10, "get_pos_of_indexes_types")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]204
+    %12 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, hyper_map)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(640)/    tensor_indexes_shapes = hyper_map(F.shape, tensor_indexes)/#Φhyper_map
+    %13 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %14 : Func = Primitive::getattr{prim_type=1}(%13, "typeof")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]205
+    %15 : Tuple[TypeType*2] = %12(%14, %para31)    #(Func, Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#indexes_types
+    %16 : Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]] = %11(%15, %para32)    #(Tuple[TypeType*2], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]206
+    %17 : Tuple[I64] = %9(%16, I64(5))    #(Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(603)/    slice_positions, _, _, int_positions, _, tensor_positions, sequence_positions = \/#tensor_positions
+    %18 : Tuple[] = %1(%3, I64(1))    #(Tuple[Tuple[]*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(605)/    tuple_index_new, slice_shapes = (), ()/#slice_shapes
+    %19 : List[] = %5(%7, I64(1))    #(Tuple[List[]*2], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(601)/    tensor_indexes, slice_indexes = [], []/#slice_indexes
+
+#------------------------> 21
+    %20 = FuncGraph::fg_40(I64(0), %4, %8, %17, %18, %19)    #(I64, Tuple[], List[], Tuple[I64], Tuple[], List[])    # fg_40=⤾↓↓_tensor_getitem_by_tuple.40 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]207
+    Primitive::Return{prim_type=1}(%20)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]208
+}
+# order:
+#   1: ↓↓_tensor_getitem_by_tuple.39:Φlen{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> len}
+#   2: ↓↓_tensor_getitem_by_tuple.39:[CNode]209{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   3: ↓↓_tensor_getitem_by_tuple.39:[CNode]210{[0]: [CNode]209, [1]: Φtuple_index}
+#   4: ↓↓_tensor_getitem_by_tuple.39:Φtuple_index_len{[0]: Φlen, [1]: Φtuple_index}
+#   5: ↓↓_tensor_getitem_by_tuple.39:[CNode]202{[0]: [CNode]201, [1]: ValueNode<ValueList> [], [2]: ValueNode<ValueList> []}
+#   6: ↓↓_tensor_getitem_by_tuple.39:tensor_indexes{[0]: [CNode]200, [1]: [CNode]202, [2]: ValueNode<Int64Imm> 0}
+#   7: ↓↓_tensor_getitem_by_tuple.39:slice_indexes{[0]: [CNode]200, [1]: [CNode]202, [2]: ValueNode<Int64Imm> 1}
+#   8: ↓↓_tensor_getitem_by_tuple.39:Φhyper_map{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> hyper_map}
+#   9: ↓↓_tensor_getitem_by_tuple.39:ΦF{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> F}
+#  10: ↓↓_tensor_getitem_by_tuple.39:[CNode]211{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  11: ↓↓_tensor_getitem_by_tuple.39:[CNode]212{[0]: [CNode]211, [1]: [CNode]205, [2]: Φtuple_index}
+#  12: ↓↓_tensor_getitem_by_tuple.39:indexes_types{[0]: Φhyper_map, [1]: [CNode]205, [2]: Φtuple_index}
+#  13: ↓↓_tensor_getitem_by_tuple.39:[CNode]213{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  14: ↓↓_tensor_getitem_by_tuple.39:[CNode]214{[0]: [CNode]213, [1]: indexes_types, [2]: Φop_name}
+#  15: ↓↓_tensor_getitem_by_tuple.39:[CNode]206{[0]: [CNode]204, [1]: indexes_types, [2]: Φop_name}
+#  16: ↓↓_tensor_getitem_by_tuple.39:Φslice_positions{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 0}
+#  17: ↓↓_tensor_getitem_by_tuple.39:_{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 1}
+#  18: ↓↓_tensor_getitem_by_tuple.39:_{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 2}
+#  19: ↓↓_tensor_getitem_by_tuple.39:Φint_positions{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 3}
+#  20: ↓↓_tensor_getitem_by_tuple.39:_{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 4}
+#  21: ↓↓_tensor_getitem_by_tuple.39:tensor_positions{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 5}
+#  22: ↓↓_tensor_getitem_by_tuple.39:Φsequence_positions{[0]: [CNode]203, [1]: [CNode]206, [2]: ValueNode<Int64Imm> 6}
+#  23: ↓↓_tensor_getitem_by_tuple.39:[CNode]199{[0]: [CNode]198, [1]: ValueNode<ValueTuple> (), [2]: ValueNode<ValueTuple> ()}
+#  24: ↓↓_tensor_getitem_by_tuple.39:tuple_index_new{[0]: [CNode]197, [1]: [CNode]199, [2]: ValueNode<Int64Imm> 0}
+#  25: ↓↓_tensor_getitem_by_tuple.39:slice_shapes{[0]: [CNode]197, [1]: [CNode]199, [2]: ValueNode<Int64Imm> 1}
+#  26: ↓↓_tensor_getitem_by_tuple.39:[CNode]215{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  27: ↓↓_tensor_getitem_by_tuple.39:[CNode]216{[0]: [CNode]215, [1]: Φdata}
+#  28: ↓↓_tensor_getitem_by_tuple.39:Φdata_shape{[0]: [CNode]217, [1]: Φdata}
+#  29: ↓↓_tensor_getitem_by_tuple.39:Φenumerate{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> enumerate}
+#  30: ↓↓_tensor_getitem_by_tuple.39:Φzip{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> zip}
+#  31: ↓↓_tensor_getitem_by_tuple.39:[CNode]218{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  32: ↓↓_tensor_getitem_by_tuple.39:[CNode]219{[0]: [CNode]218, [1]: Φtuple_index, [2]: Φdata_shape}
+#  33: ↓↓_tensor_getitem_by_tuple.39:[CNode]220{[0]: Φzip, [1]: Φtuple_index, [2]: Φdata_shape}
+#  34: ↓↓_tensor_getitem_by_tuple.39:[CNode]221{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  35: ↓↓_tensor_getitem_by_tuple.39:[CNode]222{[0]: [CNode]221, [1]: [CNode]220}
+#  36: ↓↓_tensor_getitem_by_tuple.39:[CNode]223{[0]: Φenumerate, [1]: [CNode]220}
+#  37: ↓↓_tensor_getitem_by_tuple.39:[CNode]224{[0]: [CNode]225, [1]: [CNode]223}
+#  38: ↓↓_tensor_getitem_by_tuple.39:[CNode]207{[0]: ValueNode<FuncGraph> ⤾↓↓_tensor_getitem_by_tuple.40, [1]: ValueNode<Int64Imm> 0, [2]: tuple_index_new, [3]: tensor_indexes, [4]: tensor_positions, [5]: slice_shapes, [6]: slice_indexes}
+#  39: ↓↓_tensor_getitem_by_tuple.39:[CNode]208{[0]: ValueNode<Primitive> Return, [1]: [CNode]207}
+#  40: ↓↓_tensor_getitem_by_tuple.39:Φmstype{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> mstype}
+#  41: ↓↓_tensor_getitem_by_tuple.39:Φis_shape_unknown{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> is_shape_unknown}
+#  42: ↓↓_tensor_getitem_by_tuple.39:Φcheck_range{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> check_range}
+#  43: ↓↓_tensor_getitem_by_tuple.39:Φ_transform_indexing_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> _transform_indexing_tensor}
+#  44: ↓↓_tensor_getitem_by_tuple.39:Φconvert_slice_to_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> convert_slice_to_tensor}
+#  45: ↓↓_tensor_getitem_by_tuple.39:Φstack{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> stack}
+
+
+# [No.19] ⤾↓↓_tensor_getitem_by_tuple.40
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/
+funcgraph fg_40[fg_39](
+        %para36 : I64    # @[CNode]41
+        , %para37 : Tuple[]    # Φtuple_index_new
+        , %para38 : List[]    # Φtensor_indexes
+        , %para39 : Tuple[I64]    # Φtensor_positions
+        , %para40 : Tuple[]    # Φslice_shapes
+        , %para41 : List[]    # Φslice_indexes
+    ) {
+    %1 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, len)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]225
+    %2 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %3 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %4 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %5 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%4, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %6 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %5(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %7 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %3(%para31, %6)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %8 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %2(%7)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %9 : $(↓↓_tensor_getitem_by_tuple.39):I64 = %1(%8)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]224
+    %10 : Bool = MultitypeFuncGraph::less{(Tensor, Number), (Number, Tensor), (Number, Number), (Tensor, Tensor)}(%para36, %9)    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]226
+    %11 : Func = Primitive::Switch{prim_type=1}(%10, FuncGraph::fg_42, FuncGraph::fg_227)    #(Bool, Func, Func)    # fg_42=⥁↓↓_tensor_getitem_by_tuple.42, fg_227=↓↓↓_tensor_getitem_by_tuple.227 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]228
+
+#------------------------> 22
+    %12 = %11() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]229
+    Primitive::Return{prim_type=1}(%12)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]230
+}
+# order:
+#   1: ⤾↓↓_tensor_getitem_by_tuple.40:[CNode]226{[0]: ValueNode<MultitypeFuncGraph> less.15, [1]: @[CNode]41, [2]: [CNode]224}
+#   2: ⤾↓↓_tensor_getitem_by_tuple.40:[CNode]228{[0]: ValueNode<Primitive> Switch, [1]: [CNode]226, [2]: ValueNode<FuncGraph> ⥁↓↓_tensor_getitem_by_tuple.42, [3]: ValueNode<FuncGraph> ↓↓↓_tensor_getitem_by_tuple.227}
+#   3: ⤾↓↓_tensor_getitem_by_tuple.40:[CNode]229{[0]: [CNode]228}
+#   4: ⤾↓↓_tensor_getitem_by_tuple.40:[CNode]230{[0]: ValueNode<Primitive> Return, [1]: [CNode]229}
+#   5: ⤾↓↓_tensor_getitem_by_tuple.40:Φmstype{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> mstype}
+#   6: ⤾↓↓_tensor_getitem_by_tuple.40:Φis_shape_unknown{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> is_shape_unknown}
+#   7: ⤾↓↓_tensor_getitem_by_tuple.40:Φcheck_range{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> check_range}
+#   8: ⤾↓↓_tensor_getitem_by_tuple.40:Φ_transform_indexing_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> _transform_indexing_tensor}
+#   9: ⤾↓↓_tensor_getitem_by_tuple.40:Φconvert_slice_to_tensor{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> convert_slice_to_tensor}
+#  10: ⤾↓↓_tensor_getitem_by_tuple.40:Φstack{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.ops.composite.multitype_ops._compile_utils', [2]: ValueNode<Symbol> stack}
+
+
+# [No.20] ⥁↓↓_tensor_getitem_by_tuple.42
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/
+funcgraph fg_42[fg_40](
+) {
+    %1 : I64 = MultitypeFuncGraph::add{(Tuple, Tuple), (RowTensor, Tensor), (Tensor, Tensor), (List, List), (Tensor, List), (List, Tensor), (String, String), (Tuple, Tensor), (NoneType, NoneType), (Number, Number), (Number, Tensor), (Tensor, Number), (Tensor, Tuple)}(%para36, I64(1))    #(I64, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]41
+    %2 : I64 = Primitive::stop_gradient{prim_type=1}(%1)    #(I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]231
+    %3 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]232
+    %4 : Func = Primitive::resolve{prim_type=1}(NameSpace::Ast, contains)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(0)/#[CNode]233
+    %5 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]234
+    %6 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]235
+    %7 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %8 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %9 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %10 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%9, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %11 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %10(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %12 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %8(%para31, %11)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %13 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %7(%12)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %14 : Tuple[I64,Tuple[Tensor(Bool),I64]] = %6(%13, %para36)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]236
+    %15 : I64 = %5(%14, I64(0))    #(Tuple[I64,Tuple[Tensor(Bool),I64]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(624)/            tensor_positions += (i,)/#Φi
+    %16 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(603)/    slice_positions, _, _, int_positions, _, tensor_positions, sequence_positions = \/#[CNode]203
+    %17 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(648)/        return const_utils.make_tensor([], data.dtype, final_shape)/#Φconst_utils
+    %18 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%17, "get_pos_of_indexes_types")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]204
+    %19 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, hyper_map)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(640)/    tensor_indexes_shapes = hyper_map(F.shape, tensor_indexes)/#Φhyper_map
+    %20 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%9, "typeof")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]205
+    %21 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[TypeType*2] = %19(%20, %para31)    #(Func, Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#indexes_types
+    %22 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]] = %18(%21, %para32)    #(Tuple[TypeType*2], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]206
+    %23 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[] = %16(%22, I64(3))    #(Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φint_positions
+    %24 : Bool = %4(%15, %23)    #(I64, Tuple[]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]237
+    %25 : Bool = %3(%24)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]238
+    %26 : Func = Primitive::Switch{prim_type=1}(%25, FuncGraph::fg_239, FuncGraph::fg_43)    #(Bool, Func, Func)    # fg_239=✓⥁↓↓_tensor_getitem_by_tuple.239, fg_43=✗⥁↓↓_tensor_getitem_by_tuple.43 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]240
+
+#------------------------> 23
+    %27 = %26() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]241
+    %28 = Primitive::TupleGetItem{prim_type=1}(%27, I64(0))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]242
+    %29 = Primitive::TupleGetItem{prim_type=1}(%27, I64(1))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]243
+    %30 = Primitive::TupleGetItem{prim_type=1}(%27, I64(2))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]244
+    %31 = Primitive::TupleGetItem{prim_type=1}(%27, I64(3))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]245
+    %32 = Primitive::TupleGetItem{prim_type=1}(%27, I64(4))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]246
+    %33 = FuncGraph::fg_247(%28, %29, %30, %31, %32)    #(Undefined, Undefined, Undefined, Undefined, Undefined)    # fg_247=↓⥁↓↓_tensor_getitem_by_tuple.247 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]248
+    %34 = Primitive::Depend{prim_type=1}[side_effect_propagate=I64(1)](%33, %2)    #(Undefined, I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]249
+    Primitive::Return{prim_type=1}(%34)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/#[CNode]250
+}
+# order:
+#   1: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]236{[0]: [CNode]235, [1]: [CNode]223, [2]: @[CNode]41}
+#   2: ⥁↓↓_tensor_getitem_by_tuple.42:Φi{[0]: [CNode]234, [1]: [CNode]236, [2]: ValueNode<Int64Imm> 0}
+#   3: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]251{[0]: [CNode]234, [1]: [CNode]236, [2]: ValueNode<Int64Imm> 1}
+#   4: ⥁↓↓_tensor_getitem_by_tuple.42:Φindex{[0]: [CNode]252, [1]: [CNode]251, [2]: ValueNode<Int64Imm> 0}
+#   5: ⥁↓↓_tensor_getitem_by_tuple.42:dim_size{[0]: [CNode]252, [1]: [CNode]251, [2]: ValueNode<Int64Imm> 1}
+#   6: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]41{[0]: ValueNode<MultitypeFuncGraph> add.4, [1]: @[CNode]41, [2]: ValueNode<Int64Imm> 1}
+#   7: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]237{[0]: [CNode]233, [1]: Φi, [2]: Φint_positions}
+#   8: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]238{[0]: [CNode]232, [1]: [CNode]237}
+#   9: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]240{[0]: ValueNode<Primitive> Switch, [1]: [CNode]238, [2]: ValueNode<FuncGraph> ✓⥁↓↓_tensor_getitem_by_tuple.239, [3]: ValueNode<FuncGraph> ✗⥁↓↓_tensor_getitem_by_tuple.43}
+#  10: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]241{[0]: [CNode]240}
+#  11: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]250{[0]: ValueNode<Primitive> Return, [1]: [CNode]241}
+#  12: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]248{[0]: ValueNode<FuncGraph> ↓⥁↓↓_tensor_getitem_by_tuple.247, [1]: [CNode]242, [2]: [CNode]243, [3]: [CNode]244, [4]: [CNode]245, [5]: [CNode]246}
+#  13: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]249{[0]: ValueNode<Primitive> Depend, [1]: [CNode]248, [2]: [CNode]231}
+#  14: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]250{[0]: ValueNode<Primitive> Return, [1]: [CNode]249}
+#  15: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]242{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]241, [2]: ValueNode<Int64Imm> 0}
+#  16: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]243{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]241, [2]: ValueNode<Int64Imm> 1}
+#  17: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]244{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]241, [2]: ValueNode<Int64Imm> 2}
+#  18: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]245{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]241, [2]: ValueNode<Int64Imm> 3}
+#  19: ⥁↓↓_tensor_getitem_by_tuple.42:[CNode]246{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]241, [2]: ValueNode<Int64Imm> 4}
+
+
+# [No.21] ✗⥁↓↓_tensor_getitem_by_tuple.43
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(608)/        if i in int_positions:/
+funcgraph fg_43[fg_42](
+) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]253
+    %2 : Func = Primitive::resolve{prim_type=1}(NameSpace::Ast, contains)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(0)/#[CNode]254
+    %3 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]234
+    %4 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]235
+    %5 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %6 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %7 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %8 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%7, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %9 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %8(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %10 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %6(%para31, %9)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %11 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %5(%10)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %12 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[I64,Tuple[Tensor(Bool),I64]] = %4(%11, %para36)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]236
+    %13 : $(⥁↓↓_tensor_getitem_by_tuple.42):I64 = %3(%12, I64(0))    #(Tuple[I64,Tuple[Tensor(Bool),I64]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(624)/            tensor_positions += (i,)/#Φi
+    %14 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(603)/    slice_positions, _, _, int_positions, _, tensor_positions, sequence_positions = \/#[CNode]203
+    %15 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(648)/        return const_utils.make_tensor([], data.dtype, final_shape)/#Φconst_utils
+    %16 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%15, "get_pos_of_indexes_types")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]204
+    %17 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, hyper_map)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(640)/    tensor_indexes_shapes = hyper_map(F.shape, tensor_indexes)/#Φhyper_map
+    %18 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%7, "typeof")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#[CNode]205
+    %19 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[TypeType*2] = %17(%18, %para31)    #(Func, Tuple[Tensor(Bool),Slice[None : None : None]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(602)/    indexes_types = hyper_map(F.typeof, tuple_index)/#indexes_types
+    %20 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]] = %16(%19, %para32)    #(Tuple[TypeType*2], String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(604)/        const_utils.get_pos_of_indexes_types(indexes_types, op_name)/#[CNode]206
+    %21 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[] = %14(%20, I64(6))    #(Tuple[Tuple[I64],Tuple[]*4,Tuple[I64],Tuple[]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φsequence_positions
+    %22 : Bool = %2(%13, %21)    #(I64, Tuple[]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]255
+    %23 : Bool = %1(%22)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]256
+    %24 : Func = Primitive::Switch{prim_type=1}(%23, FuncGraph::fg_257, FuncGraph::fg_44)    #(Bool, Func, Func)    # fg_257=✓✗⥁↓↓_tensor_getitem_by_tuple.257, fg_44=✗✗⥁↓↓_tensor_getitem_by_tuple.44 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]258
+
+#------------------------> 24
+    %25 = %24() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]259
+    %26 = Primitive::TupleGetItem{prim_type=1}(%25, I64(0))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]260
+    %27 = Primitive::TupleGetItem{prim_type=1}(%25, I64(1))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]261
+    %28 = Primitive::TupleGetItem{prim_type=1}(%25, I64(2))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]262
+    %29 = Primitive::TupleGetItem{prim_type=1}(%25, I64(3))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]263
+    %30 = Primitive::TupleGetItem{prim_type=1}(%25, I64(4))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]264
+    %31 = FuncGraph::fg_265(%26, %27, %28, %29, %30)    #(Undefined, Undefined, Undefined, Undefined, Undefined)    # fg_265=↓✗⥁↓↓_tensor_getitem_by_tuple.265 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]266
+    Primitive::Return{prim_type=1}(%31)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/#[CNode]267
+}
+# order:
+#   1: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]255{[0]: [CNode]254, [1]: Φi, [2]: Φsequence_positions}
+#   2: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]256{[0]: [CNode]253, [1]: [CNode]255}
+#   3: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]258{[0]: ValueNode<Primitive> Switch, [1]: [CNode]256, [2]: ValueNode<FuncGraph> ✓✗⥁↓↓_tensor_getitem_by_tuple.257, [3]: ValueNode<FuncGraph> ✗✗⥁↓↓_tensor_getitem_by_tuple.44}
+#   4: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]259{[0]: [CNode]258}
+#   5: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]266{[0]: ValueNode<FuncGraph> ↓✗⥁↓↓_tensor_getitem_by_tuple.265, [1]: [CNode]260, [2]: [CNode]261, [3]: [CNode]262, [4]: [CNode]263, [5]: [CNode]264}
+#   6: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]267{[0]: ValueNode<Primitive> Return, [1]: [CNode]266}
+#   7: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]260{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]259, [2]: ValueNode<Int64Imm> 0}
+#   8: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]261{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]259, [2]: ValueNode<Int64Imm> 1}
+#   9: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]262{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]259, [2]: ValueNode<Int64Imm> 2}
+#  10: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]263{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]259, [2]: ValueNode<Int64Imm> 3}
+#  11: ✗⥁↓↓_tensor_getitem_by_tuple.43:[CNode]264{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]259, [2]: ValueNode<Int64Imm> 4}
+
+
+# [No.22] ✗✗⥁↓↓_tensor_getitem_by_tuple.44
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(618)/        elif i in sequence_positions:/
+funcgraph fg_44[fg_42](
+) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]268
+    %2 : Func = Primitive::resolve{prim_type=1}(NameSpace::Ast, contains)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(0)/#[CNode]269
+    %3 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]234
+    %4 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]235
+    %5 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %6 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %7 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %8 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%7, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %9 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %8(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %10 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %6(%para31, %9)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %11 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %5(%10)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %12 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[I64,Tuple[Tensor(Bool),I64]] = %4(%11, %para36)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]236
+    %13 : $(⥁↓↓_tensor_getitem_by_tuple.42):I64 = %3(%12, I64(0))    #(Tuple[I64,Tuple[Tensor(Bool),I64]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(624)/            tensor_positions += (i,)/#Φi
+    %14 : Bool = %2(%13, %para39)    #(I64, Tuple[I64]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]270
+    %15 : Bool = %1(%14)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]271
+    %16 : Func = Primitive::Switch{prim_type=1}(%15, FuncGraph::fg_45, FuncGraph::fg_272)    #(Bool, Func, Func)    # fg_45=✓✗✗⥁↓↓_tensor_getitem_by_tuple.45, fg_272=✗✗✗⥁↓↓_tensor_getitem_by_tuple.272 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]273
+
+#------------------------> 25
+    %17 = %16() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]274
+    %18 = Primitive::TupleGetItem{prim_type=1}(%17, I64(0))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]275
+    %19 = Primitive::TupleGetItem{prim_type=1}(%17, I64(1))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]276
+    %20 = Primitive::TupleGetItem{prim_type=1}(%17, I64(2))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]277
+    %21 = Primitive::TupleGetItem{prim_type=1}(%17, I64(3))    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]278
+    %22 = FuncGraph::fg_279(%18, %19, %20, %21)    #(Undefined, Undefined, Undefined, Undefined)    # fg_279=↓✗✗⥁↓↓_tensor_getitem_by_tuple.279 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]280
+    Primitive::Return{prim_type=1}(%22)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/#[CNode]281
+}
+# order:
+#   1: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]270{[0]: [CNode]269, [1]: Φi, [2]: Φtensor_positions}
+#   2: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]271{[0]: [CNode]268, [1]: [CNode]270}
+#   3: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]273{[0]: ValueNode<Primitive> Switch, [1]: [CNode]271, [2]: ValueNode<FuncGraph> ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45, [3]: ValueNode<FuncGraph> ✗✗✗⥁↓↓_tensor_getitem_by_tuple.272}
+#   4: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]274{[0]: [CNode]273}
+#   5: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]280{[0]: ValueNode<FuncGraph> ↓✗✗⥁↓↓_tensor_getitem_by_tuple.279, [1]: [CNode]275, [2]: [CNode]276, [3]: [CNode]277, [4]: [CNode]278}
+#   6: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]281{[0]: ValueNode<Primitive> Return, [1]: [CNode]280}
+#   7: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]275{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]274, [2]: ValueNode<Int64Imm> 0}
+#   8: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]276{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]274, [2]: ValueNode<Int64Imm> 1}
+#   9: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]277{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]274, [2]: ValueNode<Int64Imm> 2}
+#  10: ✗✗⥁↓↓_tensor_getitem_by_tuple.44:[CNode]278{[0]: ValueNode<Primitive> TupleGetItem, [1]: [CNode]274, [2]: ValueNode<Int64Imm> 3}
+
+
+# [No.23] ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(625)/        elif i in tensor_positions:/
+funcgraph fg_45[fg_42](
+) {
+    %1 : Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, bool_)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]282
+    %2 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(648)/        return const_utils.make_tensor([], data.dtype, final_shape)/#Φconst_utils
+    %3 : Func = Primitive::getattr{prim_type=1}(%2, "check_type_invalid")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(626)/            invalid = const_utils.check_type_invalid(F.dtype(index), mstype.int_type)/#[CNode]283
+    %4 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %5 : Func = Primitive::getattr{prim_type=1}(%4, "dtype")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(626)/            invalid = const_utils.check_type_invalid(F.dtype(index), mstype.int_type)/#[CNode]284
+    %6 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]252
+    %7 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]234
+    %8 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]235
+    %9 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %10 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %11 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%4, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %12 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %11(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %13 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %10(%para31, %12)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %14 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %9(%13)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %15 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[I64,Tuple[Tensor(Bool),I64]] = %8(%14, %para36)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]236
+    %16 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[Tensor(Bool),I64] = %7(%15, I64(1))    #(Tuple[I64,Tuple[Tensor(Bool),I64]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]251
+    %17 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tensor(Bool)[1500] = %6(%16, I64(0))    #(Tuple[Tensor(Bool),I64], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(631)/            tensor_index = F.cast(index, mstype.int64)/#Φindex
+    %18 : TypeType = %5(%17)    #(Tensor(Bool)[1500]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(626)/            invalid = const_utils.check_type_invalid(F.dtype(index), mstype.int_type)/#[CNode]285
+    %19 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, mstype)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φmstype
+    %20 : Tuple[TypeType*4] = Primitive::getattr{prim_type=1}(%19, "int_type")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(626)/            invalid = const_utils.check_type_invalid(F.dtype(index), mstype.int_type)/#[CNode]286
+    %21 : Bool = %3(%18, %20)    #(TypeType, Tuple[TypeType*4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(626)/            invalid = const_utils.check_type_invalid(F.dtype(index), mstype.int_type)/#invalid
+    %22 : Bool = %1(%21)    #(Bool) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]287
+    %23 : Func = Primitive::Switch{prim_type=1}(%22, FuncGraph::fg_46, FuncGraph::fg_288)    #(Bool, Func, Func)    # fg_46=✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46, fg_288=✗✓✗✗⥁↓↓_tensor_getitem_by_tuple.288 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]289
+
+#------------------------> 26
+    %24 = %23() #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]290
+    Primitive::Return{prim_type=1}(%24)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]291
+}
+# order:
+#   1: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]292{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]293{[0]: [CNode]292, [1]: Φindex}
+#   3: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]285{[0]: [CNode]284, [1]: Φindex}
+#   4: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]294{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]295{[0]: [CNode]294, [1]: [CNode]285, [2]: [CNode]286}
+#   6: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:invalid{[0]: [CNode]283, [1]: [CNode]285, [2]: [CNode]286}
+#   7: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]287{[0]: [CNode]282, [1]: invalid}
+#   8: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]289{[0]: ValueNode<Primitive> Switch, [1]: [CNode]287, [2]: ValueNode<FuncGraph> ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46, [3]: ValueNode<FuncGraph> ✗✓✗✗⥁↓↓_tensor_getitem_by_tuple.288}
+#   9: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]290{[0]: [CNode]289}
+#  10: ✓✗✗⥁↓↓_tensor_getitem_by_tuple.45:[CNode]291{[0]: ValueNode<Primitive> Return, [1]: [CNode]290}
+
+
+# [No.24] ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46
+# In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/
+funcgraph fg_46[fg_42](
+) {
+    %1 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, const_utils)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(648)/        return const_utils.make_tensor([], data.dtype, final_shape)/#Φconst_utils
+    %2 : Func = Primitive::getattr{prim_type=1}(%1, "raise_index_error")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(630)/                const_utils.raise_index_error(exp_msg)/#[CNode]296
+    %3 : Func = Primitive::getattr{prim_type=1}(%1, "gen_exception_msg")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(628)/                exp_msg = const_utils.gen_exception_msg(/#[CNode]297
+    %4 : $(_tensor_getitem_by_tuple.32):ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, F)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(664)/    result = F.gather_nd(data, indices)/#ΦF
+    %5 : Func = Primitive::getattr{prim_type=1}(%4, "dtype")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(629)/                    "The tensor element in tuple index must be int type, but got {}.", F.dtype(index))/#[CNode]298
+    %6 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]252
+    %7 : $(⥁↓↓_tensor_getitem_by_tuple.42):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]234
+    %8 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::resolve{prim_type=1}(NameSpace::CommonOPS, getitem)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]235
+    %9 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, enumerate)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(652)/    for i, index in enumerate(tuple_index_new):/#Φenumerate
+    %10 : $(_tensor_getitem_by_tuple.32):Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, zip)    #(ExternalType, ExternalType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φzip
+    %11 : $(↓↓_tensor_getitem_by_tuple.39):Func = Primitive::getattr{prim_type=1}(%4, "shape")    #(ExternalType, String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(606)/    data_shape = F.shape(data)/#[CNode]217
+    %12 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[I64*2] = %11(%para30)    #(Tensor(F64)[1500, 4]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#Φdata_shape
+    %13 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]] = %10(%para31, %12)    #(Tuple[Tensor(Bool),Slice[None : None : None]], Tuple[I64*2]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]220
+    %14 : $(↓↓_tensor_getitem_by_tuple.39):Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]] = %9(%13)    #(Tuple[Tuple[Tensor(Bool),I64],Tuple[Slice[None : None : None],I64]]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]223
+    %15 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[I64,Tuple[Tensor(Bool),I64]] = %8(%14, %para36)    #(Tuple[Tuple[I64,Tuple[Tensor(Bool),I64]],Tuple[I64,Tuple[Slice[None : None : None],I64]]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]236
+    %16 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tuple[Tensor(Bool),I64] = %7(%15, I64(1))    #(Tuple[I64,Tuple[Tensor(Bool),I64]], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(607)/    for i, (index, dim_size) in enumerate(zip(tuple_index, data_shape)):/#[CNode]251
+    %17 : $(⥁↓↓_tensor_getitem_by_tuple.42):Tensor(Bool)[1500] = %6(%16, I64(0))    #(Tuple[Tensor(Bool),I64], I64) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(631)/            tensor_index = F.cast(index, mstype.int64)/#Φindex
+    %18 : TypeType = %5(%17)    #(Tensor(Bool)[1500]) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(629)/                    "The tensor element in tuple index must be int type, but got {}.", F.dtype(index))/#[CNode]299
+    %19 : String = %3("The tensor element in tuple index must be int type, but got {}.", %18)    #(String, TypeType) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(628)/                exp_msg = const_utils.gen_exception_msg(/#exp_msg
+
+#------------------------> 27
+    %20 = %2(%19)    #(String) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(630)/                const_utils.raise_index_error(exp_msg)/#[CNode]300
+    %21 = Primitive::stop_gradient{prim_type=1}(%20)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]301
+    %22 = FuncGraph::fg_302()    # fg_302=↓✓✗✗⥁↓↓_tensor_getitem_by_tuple.302 #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]303
+    %23 = Primitive::Depend{prim_type=1}[side_effect_propagate=I64(1)](%22, %21)    #(Undefined, Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(446)/    return _tensor_getitem_by_tuple(data, tuple_index, op_name)/#[CNode]304
+    Primitive::Return{prim_type=1}(%23)    #(Undefined) #scope: Default/network-CustomWithLossCell
+      # In file C:\Users\49348\Anaconda3\envs\mindspore_py37\lib\site-packages\mindspore\ops\composite\multitype_ops\_compile_utils.py(627)/            if invalid:/#[CNode]305
+}
+# order:
+#   1: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]306{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   2: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]307{[0]: [CNode]306, [1]: Φindex}
+#   3: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]299{[0]: [CNode]298, [1]: Φindex}
+#   4: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]308{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]309{[0]: [CNode]308, [1]: ValueNode<StringImm> The tensor element in tuple index must be int type, but got {}., [2]: [CNode]299}
+#   6: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:exp_msg{[0]: [CNode]297, [1]: ValueNode<StringImm> The tensor element in tuple index must be int type, but got {}., [2]: [CNode]299}
+#   7: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]310{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]311{[0]: [CNode]310, [1]: exp_msg}
+#   9: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]300{[0]: [CNode]296, [1]: exp_msg}
+#  10: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]303{[0]: ValueNode<FuncGraph> ↓✓✗✗⥁↓↓_tensor_getitem_by_tuple.302}
+#  11: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]305{[0]: ValueNode<Primitive> Return, [1]: [CNode]303}
+#  12: ✓✓✗✗⥁↓↓_tensor_getitem_by_tuple.46:[CNode]305{[0]: ValueNode<Primitive> Return, [1]: [CNode]304}
+
+
+#===============================================================================
+# num of function graphs in stack: 24/30 (Ignored 6 internal frames).
